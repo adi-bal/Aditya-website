@@ -15,12 +15,15 @@
     <meta property="og:title" content="Aditya Ballaki | ECE Portfolio">
     <meta property="og:description" content="Electrical and Computer Engineering graduate student at Cornell Tech with experience in machine learning and software development.">
     <meta property="og:image" content="https://your-website-url.com/preview-image.jpg">
-
+</head>
 <body>
     <header>
         <div class="container header-container">
             <a href="#" class="logo">Aditya Ballaki</a>
-            <nav class="nav-menu">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav class="nav-menu" id="navMenu">
                 <ul>
                     <li><a href="#about">About</a></li>
                     <li><a href="#education">Education</a></li>
@@ -52,7 +55,6 @@
         <div class="hero-image">
             <div class="profile-container">
                 <img src="spongebob.jpg" alt="Aditya Ballaki" id="profilePic" class="profile-pic">
-
             </div>
         </div>
     </section>
@@ -81,7 +83,7 @@
                     </div>
                     <div class="education-card-body">
                         <p class="education-detail">NTU President Research Scholar</p>
-                        <p class="education-detail">COurs in Computer Engineering</p>
+                        <p class="education-detail">Courses in Computer Engineering</p>
                     </div>
                 </div>
             </div>
@@ -233,7 +235,35 @@
     </section>
 
     <script>
-        // for theme switching 
+        // Mobile menu toggle functionality
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+            
+            // Change icon based on menu state
+            const icon = this.querySelector('i');
+            if (navMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 576) {
+                    document.getElementById('navMenu').classList.remove('active');
+                    const icon = document.querySelector('.mobile-menu-toggle i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+        });
+        
+        // Theme switcher code
         document.getElementById('themeSwitch').addEventListener('click', function() {
             document.body.classList.toggle('dark-theme');
             const icon = this.querySelector('i');
@@ -245,8 +275,8 @@
                 icon.classList.add('fa-moon');
             }
         });
-
-        // for getting tech news 
+        
+        // Tech news fetching
         document.getElementById('fetchNews').addEventListener('click', function() {
             const newsContent = document.getElementById('news-content');
             newsContent.textContent = 'Loading...';

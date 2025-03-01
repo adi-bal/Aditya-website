@@ -54,6 +54,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 15px 0;
+    position: relative;
 }
 
 .logo {
@@ -63,6 +64,16 @@ header {
     text-decoration: none;
     font-family: 'Baskerville', 'Libre Baskerville', serif;
     letter-spacing: 1px;
+}
+
+.mobile-menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--text-dark);
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 101;
 }
 
 nav ul {
@@ -546,6 +557,76 @@ section::before {
     transform: translateY(-3px);
 }
 
+/* Tech News Section */
+.news-container {
+    background-color: var(--light-gray);
+    border-radius: 4px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #DDD6C1;
+}
+
+#news-content {
+    margin-bottom: 20px;
+}
+
+.news-item {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #DDD6C1;
+    transition: var(--transition);
+}
+
+.news-item:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.news-item:hover {
+    transform: translateY(-3px);
+}
+
+.news-title {
+    margin-bottom: 8px;
+}
+
+.news-title a {
+    color: var(--primary);
+    text-decoration: none;
+    font-family: 'Baskerville', 'Libre Baskerville', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.news-title a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+.news-meta {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.9rem;
+    font-family: 'Garamond', 'EB Garamond', serif;
+}
+
+#fetchNews {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Georgia', serif;
+}
+
+#fetchNews:hover {
+    background-color: var(--accent);
+    transform: translateY(-3px);
+}
 
 /* Dark Theme Fixes */
 .dark-theme {
@@ -578,6 +659,10 @@ section::before {
 }
 
 .dark-theme .theme-switcher {
+    color: var(--text-light);
+}
+
+.dark-theme .mobile-menu-toggle {
     color: var(--text-light);
 }
 
@@ -696,6 +781,37 @@ section::before {
     color: var(--text-light);
 }
 
+.dark-theme .news-container {
+    background-color: #3b2921;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid #4d372c;
+}
+
+.dark-theme .news-item {
+    border-bottom-color: #4d372c;
+}
+
+.dark-theme .news-title a {
+    color: var(--primary-light);
+}
+
+.dark-theme .news-title a:hover {
+    color: var(--light);
+}
+
+.dark-theme .news-meta {
+    color: #d5cbb9;
+}
+
+.dark-theme #fetchNews {
+    background-color: var(--primary-light);
+    color: #2c2418;
+}
+
+.dark-theme #fetchNews:hover {
+    background-color: var(--accent);
+    color: var(--text-light);
+}
 
 /* Responsive */
 @media (max-width: 1024px) {
@@ -735,19 +851,29 @@ section::before {
     }
 }
 
+/* Mobile Navigation Improvements */
 @media (max-width: 768px) {
     .header-container {
         flex-direction: column;
         gap: 15px;
+        padding-bottom: 15px;
     }
 
     .nav-menu {
         width: 100%;
+        overflow-x: auto; /* Allow horizontal scrolling if needed */
     }
 
     nav ul {
         justify-content: center;
         gap: 1rem;
+        padding-bottom: 5px; /* Add a bit of padding at the bottom */
+        flex-wrap: wrap; /* Allow menu items to wrap on very small screens */
+    }
+
+    nav a {
+        font-size: 0.95rem; /* Slightly smaller font size on mobile */
+        padding: 5px 0; /* Add vertical padding for better tap targets */
     }
 
     .theme-switcher {
@@ -756,115 +882,110 @@ section::before {
         right: 20px;
     }
 
-    .education-container {
-        grid-template-columns: 1fr;
+    /* Fix hero section margins */
+    .hero {
+        margin-left: 0; /* Remove the left margin on mobile */
+        padding: 40px 0; /* Reduce padding on mobile */
+    }
+}
+
+/* Add a mobile menu toggle for very small screens */
+@media (max-width: 576px) {
+    .nav-menu {
+        display: none; /* Hide by default on very small screens */
     }
 
+    .nav-menu.active {
+        display: block; /* Show when active class is added */
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: transparent;
+        border: none;
+        color: var(--text-dark);
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 101;
+    }
+
+    .dark-theme .mobile-menu-toggle {
+        color: var(--text-light);
+    }
+
+    .theme-switcher {
+        position: absolute;
+        top: 15px;
+        right: 70px; /* Move to accommodate menu button */
+    }
+
+    nav ul {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+        padding: 1rem 0;
+    }
+
+    nav a {
+        font-size: 1.1rem; /* Larger font for better tap targets in dropdown */
+        display: block;
+        padding: 8px 0;
+    }
+
+    /* Project and Education cards full width */
+    .education-container,
     .projects-container {
         grid-template-columns: 1fr;
     }
+    
+    /* Adjust timeline for very small screens */
+    .timeline-item {
+        padding-left: 50px;
+        padding-right: 10px;
+    }
 }
 
-/* Tech News Section */
-.news-container {
-    background-color: var(--light-gray);
-    border-radius: 4px;
-    padding: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    border: 1px solid #DDD6C1;
+/* Additional timeline fixes for mobile */
+@media (max-width: 480px) {
+    .timeline::after {
+        left: 22px; /* Adjust the vertical line position */
+    }
+    
+    .timeline-item::after {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .timeline-item:nth-child(odd)::after,
+    .timeline-item:nth-child(even)::after {
+        left: 15px;
+    }
+    
+    .timeline-item {
+        padding-left: 45px;
+    }
+    
+    /* Adjust other section paddings for smaller screens */
+    section {
+        padding: 50px 0;
+    }
+    
+    .section-title {
+        margin-bottom: 30px;
+    }
+    
+    .section-title h2 {
+        font-size: 2rem;
+    }
 }
 
-#news-content {
-    margin-bottom: 20px;
-}
-
-.news-item {
-    padding: 15px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #DDD6C1;
-    transition: var(--transition);
-}
-
-.news-item:last-child {
-    margin-bottom: 0;
-    border-bottom: none;
-}
-
-.news-item:hover {
-    transform: translateY(-3px);
-}
-
-.news-title {
-    margin-bottom: 8px;
-}
-
-.news-title a {
-    color: var(--primary);
-    text-decoration: none;
-    font-family: 'Baskerville', 'Libre Baskerville', serif;
-    font-size: 1.2rem;
-    font-weight: 600;
-    transition: var(--transition);
-}
-
-.news-title a:hover {
-    color: var(--accent);
-    text-decoration: underline;
-}
-
-.news-meta {
-    color: var(--text-muted);
-    font-style: italic;
-    font-size: 0.9rem;
-    font-family: 'Garamond', 'EB Garamond', serif;
-}
-
-#fetchNews {
-    background-color: var(--primary);
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 4px;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: var(--transition);
-    font-family: 'Georgia', serif;
-}
-
-#fetchNews:hover {
-    background-color: var(--accent);
-    transform: translateY(-3px);
-}
-
-/* Dark theme styles for news section */
-.dark-theme .news-container {
-    background-color: #3b2921;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    border: 1px solid #4d372c;
-}
-
-.dark-theme .news-item {
-    border-bottom-color: #4d372c;
-}
-
-.dark-theme .news-title a {
-    color: var(--primary-light);
-}
-
-.dark-theme .news-title a:hover {
-    color: var(--light);
-}
-
-.dark-theme .news-meta {
-    color: #d5cbb9;
-}
-
-.dark-theme #fetchNews {
-    background-color: var(--primary-light);
-    color: #2c2418;
-}
-
-.dark-theme #fetchNews:hover {
-    background-color: var(--accent);
-    color: var(--text-light);
+/* Fix profile container on small screens */
+@media (max-width: 400px) {
+    .profile-container {
+        width: 200px;
+        height: 200px;
+    }
 }
